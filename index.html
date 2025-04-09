@@ -64,31 +64,24 @@
 
   <script>
     document.getElementById("uploadForm").addEventListener("submit", function(e) {
-      e.preventDefault();
-      const file = document.getElementById("fileInput").files[0];
-      const reader = new FileReader();
-      reader.onloadend = function () {
-        const base64 = reader.result.split(',')[1];
-        const form = new FormData();
-        form.append("myFile", base64);
-        form.append("fileName", file.name);
+    e.preventDefault();
+    const file = document.getElementById("fileInput").files[0];
+    const form = new FormData();
+    form.append("file", file, file.name);
 
         fetch("https://script.google.com/macros/s/AKfycbzIcU0p9C5e_lqud2HftW7ydj1r8FXdKehclRQmOYSIAFhTKmt_UmuGipax0ETLGzUjAw/exec", {
-          method: "POST",
-          body: form
-        })
-        .then(response => response.text())
-        .then(data => {
-          document.getElementById("status").innerText = "Děkujeme! Fotka byla úspěšně nahrána 😊";
-          setTimeout(() => {
-            window.location.href = "index.html"; // přesměrování na domovskou stránku nebo zpět sem
-          }, 2500);
-        })
-        .catch(error => {
-          document.getElementById("status").innerText = "Nahrávání se nepovedlo 😞";
-        });
-      };
-      reader.readAsDataURL(file);
+         method: "POST",
+      body: form,
+    })
+    .then(response => response.text())
+    .then(data => {
+      document.getElementById("status").innerText = "Děkujeme! Fotka byla úspěšně nahrána 😊";
+      setTimeout(() => {
+        window.location.href = "index.html";
+      }, 2500);
+    })
+    .catch(error => {
+      document.getElementById("status").innerText = "Nahrávání se nepovedlo 😞";
     });
   </script>
 </body>
