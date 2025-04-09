@@ -39,24 +39,15 @@
       margin-top: 1rem;
       font-size: 0.9rem;
     }
-    @media (max-width: 500px) {
-      .container {
-        padding: 1rem;
-      }
-      button {
-        font-size: 0.9rem;
-      }
-    }
   </style>
 </head>
 <body>
   <div class="container">
     <h1>Vítejte na naší svatbě</h1>
     <h2>Vendy a Martin</h2>
-    <p>Děkujeme, že jste s námi. Pokud jste během dne pořídili krásné momenty, budeme rádi, když je s námi nasdílíte 📸</p>
+    <p>Nahrajte nám své oblíbené momenty 📸</p>
     <form id="uploadForm">
-      <input type="file" id="fileInput" name="myFile" accept="image/*" required>
-      <br>
+      <input type="file" id="fileInput" name="file" accept="image/*" required>
       <button type="submit">Odeslat fotku</button>
     </form>
     <p id="status"></p>
@@ -64,26 +55,26 @@
 
   <script>
     document.getElementById("uploadForm").addEventListener("submit", function(e) {
-    e.preventDefault();
-    const file = document.getElementById("fileInput").files[0];
-    const form = new FormData();
-    form.append("file", file, file.name);
+      e.preventDefault();
+      const file = document.getElementById("fileInput").files[0];
+      const form = new FormData();
+      form.append("file", file);
 
-        fetch("https://script.google.com/macros/s/AKfycbzIcU0p9C5e_lqud2HftW7ydj1r8FXdKehclRQmOYSIAFhTKmt_UmuGipax0ETLGzUjAw/exec", {
-         method: "POST",
-      body: form,
-    })
-    .then(response => response.text())
-    .then(data => {
-      document.getElementById("status").innerText = "Děkujeme! Fotka byla úspěšně nahrána 😊";
-      setTimeout(() => {
-        window.location.href = "index.html";
-      }, 2500);
-    })
-    .catch(error => {
-      document.getElementById("status").innerText = "Nahrávání se nepovedlo 😞";
+      fetch("https://script.google.com/macros/s/AKfycbzIcU0p9C5e_lqud2HftW7ydj1r8FXdKehclRQmOYSIAFhTKmt_UmuGipax0ETLGzUjAw/exec", {
+        method: "POST",
+        body: form,
+      })
+      .then(response => response.text())
+      .then(data => {
+        document.getElementById("status").innerText = "Děkujeme! Fotka byla úspěšně nahrána 😊";
+        setTimeout(() => {
+          window.location.href = "index.html";
+        }, 2500);
+      })
+      .catch(error => {
+        document.getElementById("status").innerText = "Nahrávání se nepovedlo 😞";
+      });
     });
-  });
   </script>
 </body>
 </html>
